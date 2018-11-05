@@ -20,7 +20,6 @@ class Window(object):
             return
 
         glfw.make_context_current(self.window)
-        #glViewport(0, 0, 20, 20)
         print("{0}".format(glGetString(GL_VERSION).decode("ascii")))
 
     def swap(self):

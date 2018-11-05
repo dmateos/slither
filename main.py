@@ -1,31 +1,37 @@
-import window
-import shader
-import program
-import vertex_data
+from render import window
+from render import shader
+from render import program
+from render import vertex_data
+from render import vertex_object
 
-display = window.Window()
-display.setup()
+def main():
+    display = window.Window()
+    display.setup()
 
-with open("shaders/basic_frag.shader", "r") as f:
-    frag_shader_data = f.read()
-with open("shaders/basic_vert.shader", "r") as f:
-    vert_shader_data = f.read()
+    with open("shaders/basic_frag.shader", "r") as f:
+        frag_shader_data = f.read()
+    with open("shaders/basic_vert.shader", "r") as f:
+        vert_shader_data = f.read()
 
-vert_shader = shader.Shader(vert_shader_data, "vertex")
-frag_shader = shader.Shader(frag_shader_data, "fragment")
+    vert_shader = shader.Shader(vert_shader_data, "vertex")
+    frag_shader = shader.Shader(frag_shader_data, "fragment")
 
-shader_program = program.Program(vert_shader, frag_shader)
-shader_program.use()
+    shader_program = program.Program(vert_shader, frag_shader)
+    shader_program.use()
 
-vertex_data = vertex_data.VertexData(shader_program)
-vertex_data.setup()
+    vd = vertex_data.VertexData(shader_program)
+    vd.setup()
 
-while display.keep_going():
-    display.clear()
+    vo = vertex_object.VertexObject(vd)
 
-    vertex_data.draw()
+    while display.keep_going():
+        display.clear()
 
-    display.swap()
-    display.poll()
+        vo.draw(shader_program)
 
+        display.swap()
+        display.poll()
+
+if __name__ == "__main__":
+    main()
 

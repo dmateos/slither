@@ -1,8 +1,8 @@
 #version 330 core
 
-in vec3 vy;
 in vec3 vp;
+uniform mat4 translation;
 
 void main(){
-  gl_Position = vec4(vp, 1.0);
+  gl_Position = translation * vec4(vp, 1.0);
 }

@@ -1,5 +1,5 @@
-from OpenGL.GL import *
 import numpy
+from OpenGL.GL import *
 
 class VertexData(object):
     def __init__(self, program):
@@ -22,7 +22,8 @@ class VertexData(object):
 
         self.vertex_buffer_id = glGenBuffers(1)
         glBindBuffer(GL_ARRAY_BUFFER, self.vertex_buffer_id)
-        glBufferData(GL_ARRAY_BUFFER, len(self.buffer_data) * 4,
+        glBufferData(GL_ARRAY_BUFFER,
+                     len(self.buffer_data) * 4,
                      self.buffer_data,
                      GL_STATIC_DRAW
         )

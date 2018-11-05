@@ -33,6 +33,13 @@ class Program(object):
         attr = glGetAttribLocation(self.program, name)
         return attr
 
+    def get_uniform(self, name):
+        attr = glGetUniformLocation(self.program, name)
+        return attr
+
+    def set_uniform(self, name, value):
+        glUniformMatrix4fv(self.get_uniform(name), 1, False, value)
+
     @property
     def context(self):
         return self.program
