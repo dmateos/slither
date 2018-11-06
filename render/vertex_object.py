@@ -5,13 +5,18 @@ from OpenGL.GL import *
 class VertexObject(object):
     def __init__(self, vertex_data):
         self.vertex_data = vertex_data
-        self.pos = pyrr.Vector3([0.1, 0.0, 0.0])
 
-    def translation_matrix(self):
-        matrix = pyrr.Matrix44.from_translation(self.pos)
+        self.pos = pyrr.Vector3([0.10,0.0,0.0])
+        self.translation = pyrr.Vector3([0.0,0.0,0.0])
+        self.scale = pyrr.Vector3([0.5,0.5,0.5])
+
+    def transforms(self):
+        matrix = pyrr.Matrix44.from_scale(self.scale)
+        translation = pyrr.Matrix44.from_translation(self.translation)
+        matrix = matrix * translation
         return matrix
 
     def draw(self, program):
         program.use()
-        program.set_uniform("translation", self.translation_matrix())
+        program.set_uniform("translation", self.transforms())
         self.vertex_data.draw()

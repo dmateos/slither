@@ -1,8 +1,12 @@
+import pywavefront
+
 from render import window
 from render import shader
 from render import program
 from render import vertex_data
 from render import vertex_object
+
+from render import objreader
 
 def main():
     display = window.Window()
@@ -19,7 +23,10 @@ def main():
     shader_program = program.Program(vert_shader, frag_shader)
     shader_program.use()
 
-    vd = vertex_data.VertexData(shader_program)
+    vm = objreader.ObjReader("cube.obj")
+    vm.read()
+
+    vd = vertex_data.VertexData(shader_program, vm.verts, vm.vert_index)
     vd.setup()
 
     vo = vertex_object.VertexObject(vd)
@@ -32,6 +39,9 @@ def main():
         display.swap()
         display.poll()
 
+
 if __name__ == "__main__":
     main()
+    #vm = pywavefront.Wavefront("cube.obj")
+    #print(vm.materials["Material"].vertex_format)
 

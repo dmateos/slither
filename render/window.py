@@ -14,12 +14,13 @@ class Window(object):
         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
         glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
 
-        self.window = glfw.create_window(800, 600, "Window", None, None)
+        self.window = glfw.create_window(1280, 1024, "Window", None, None)
         if not self.window:
             glfw.terminate()
             return
 
         glfw.make_context_current(self.window)
+        glViewport(0, 0, 8000, 6000)
         print("{0}".format(glGetString(GL_VERSION).decode("ascii")))
 
     def swap(self):
