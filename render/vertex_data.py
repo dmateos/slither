@@ -23,46 +23,22 @@ class VertexData(object):
 
     def setup(self):
         self.vertex_array_id = glGenVertexArrays(1)
-        self.bind()
         self.program.use()
+        self.bind()
 
-        self.vertex_buffer_id = glGenBuffers(1)
-        glBindBuffer(GL_ARRAY_BUFFER, self.vertex_buffer_id)
-        glBufferData(GL_ARRAY_BUFFER,
-                     len(self.buffer_data) * 4,
-                     self.buffer_data,
-                     GL_STATIC_DRAW
-        )
-        glEnableVertexAttribArray(self.program.get_attribute("vp"))
-        glVertexAttribPointer(self.program.get_attribute("vp"), 3, GL_FLOAT, GL_FALSE, 0, None)
-
-        self.normal_buffer_id = glGenBuffers(1)
-        glBindBuffer(GL_ARRAY_BUFFER, self.normal_buffer_id)
-        glBufferData(GL_ARRAY_BUFFER,
-                     len(self.normal_data) * 4,
-                     self.normal_data,
-                     GL_STATIC_DRAW
-        )
-        glEnableVertexAttribArray(self.program.get_attribute("vn"))
-        glVertexAttribPointer(self.program.get_attribute("vn"), 3, GL_FLOAT, GL_FALSE, 0, None)
-
-        self.vertex_index_id = glGenBuffers(1)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.vertex_index_id)
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     len(self.index_data) * 4,
-                     self.index_data,
-                     GL_STATIC_DRAW
-        )
+        self.vertex_buffer_id = self._opengl_buffer(GL_ARRAY_BUFFER, self.buffer_data, "vp")
+        self.normal_buffer_id = self._opengl_buffer(GL_ARRAY_BUFFER, self.normal_data, "vn")
+        self.vertex_index_id = self._opengl_buffer(GL_ELEMENT_ARRAY_BUFFER, self.index_data)
 
         self.unbind()
-        glBindBuffer(GL_ARRAY_BUFFER, 0)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
 
     def bind(self):
         glBindVertexArray(self.vertex_array_id)
 
     def unbind(self):
         glBindVertexArray(0)
+        glBindBuffer(GL_ARRAY_BUFFER, 0)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
 
     def draw(self):
         self.program.use()
@@ -74,3 +50,21 @@ class VertexData(object):
             print(err)
 
         self.unbind()
+
+    def _opengl_buffer(self, buffer_type, data, attribute=None):
+        buffer_id = glGenBuffers(1)
+        glBindBuffer(buffer_type, buffer_id)
+        glBufferData(buffer_type,
+                     len(data) * 4,
+                     data,
+                     GL_STATIC_DRAW,
+        )
+
+        if buffer_type == GL_ARRAY_BUFFER:
+            glEnableVertexAttribArray(self.program.get_attribute(attribute))
+            glVertexAttribPointer(self.program.get_attribute(attribute),
+                                  3, GL_FLOAT, GL_FLOAT, 0, None
+            )
+
+        return buffer_id
+

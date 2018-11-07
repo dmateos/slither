@@ -25,7 +25,6 @@ def main():
     frag_shader = shader.Shader(frag_shader_data, "fragment")
 
     shader_program = program.Program(vert_shader, frag_shader)
-    shader_program.use()
 
     vm = objreader.ObjReader("cube.obj", True)
     vm2 = objreader.ObjReader("monkey.obj", False)
@@ -36,14 +35,14 @@ def main():
     #vd3 = vertex_data.VertexData(shader_program, pyrcube[0], pyrcube[1])
 
     vo = vertex_object.VertexObject(vd, 0.0,0.0,0.0)
-    vo2 = vertex_object.VertexObject(vd2, 0.0,00.0,0.0)
+    vo2 = vertex_object.VertexObject(vd2, -5.0,00.0,0.0)
     #vo3 = vertex_object.VertexObject(vd3, -5.0,00.0,0.0)
 
     while display.keep_going():
         display.clear()
 
         vo.draw(shader_program, camera_obj)
-        #vo2.draw(shader_program, camera_obj)
+        vo2.draw(shader_program, camera_obj)
         #vo3.draw(shader_program, camera_obj)
 
         display.swap()
