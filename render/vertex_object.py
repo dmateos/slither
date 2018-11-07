@@ -19,4 +19,5 @@ class VertexObject(object):
         program.use()
         program.set_uniform("translation", self.transforms())
         program.set_uniform("view", camera.transforms())
+        program.set_uniform("perspective", camera.perspective())
         self.vertex_data.draw()
