@@ -24,7 +24,7 @@ class Window(object):
 
         glClearColor(0.0, 1.0, 0.0, 1.0)
         glEnable(GL_DEPTH_TEST)
-        glDisable(GL_CULL_FACE)
+        glEnable(GL_CULL_FACE)
         glDepthFunc(GL_LESS)
 
         print("{0}".format(glGetString(GL_VERSION).decode("ascii")))
