@@ -4,6 +4,7 @@ class ObjReader(object):
         self.verts = []
         self.normals = []
         self.vert_index = []
+        self.norm_index = []
         self.debug = debug
         self.read()
 
@@ -23,8 +24,12 @@ class ObjReader(object):
                 for vert in line.split(" ")[1:]:
                     for e in vert.split("//")[0]:
                         self.vert_index.append(int(e[0])-1)
+                    for e in vert.split("//")[1]:
+                        self.norm_index.append(int(e[0])-1)
 
         if self.debug:
+            print("ObjReader")
             print(self.verts)
             print(self.vert_index)
+            print(self.norm_index)
 

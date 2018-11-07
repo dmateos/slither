@@ -28,23 +28,23 @@ def main():
     shader_program.use()
 
     vm = objreader.ObjReader("cube.obj", True)
-    vm2 = objreader.ObjReader("torus.obj", False)
-    pyrcube = pyrr.geometry.create_cube()
+    vm2 = objreader.ObjReader("monkey.obj", False)
+    #pyrcube = pyrr.geometry.create_cube()
 
-    vd = vertex_data.VertexData(shader_program, vm.verts, vm.vert_index, True)
-    vd2 = vertex_data.VertexData(shader_program, vm2.verts, vm2.vert_index)
-    vd3 = vertex_data.VertexData(shader_program, pyrcube[0], pyrcube[1])
+    vd = vertex_data.VertexData(shader_program, vm.verts, vm.vert_index, vm.normals, True)
+    vd2 = vertex_data.VertexData(shader_program, vm2.verts, vm2.vert_index, vm2.normals)
+    #vd3 = vertex_data.VertexData(shader_program, pyrcube[0], pyrcube[1])
 
     vo = vertex_object.VertexObject(vd, 0.0,0.0,0.0)
     vo2 = vertex_object.VertexObject(vd2, 0.0,00.0,0.0)
-    vo3 = vertex_object.VertexObject(vd3, -5.0,00.0,0.0)
+    #vo3 = vertex_object.VertexObject(vd3, -5.0,00.0,0.0)
 
     while display.keep_going():
         display.clear()
 
         vo.draw(shader_program, camera_obj)
         #vo2.draw(shader_program, camera_obj)
-        vo3.draw(shader_program, camera_obj)
+        #vo3.draw(shader_program, camera_obj)
 
         display.swap()
         display.poll()
