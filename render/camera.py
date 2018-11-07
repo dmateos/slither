@@ -10,7 +10,7 @@ class Camera(object):
         perspective = pyrr.Matrix44.perspective_projection(60.0, 1280/1024, 0.01, 1000.0)
 
         lookat = pyrr.Matrix44.look_at(
-            (0, 0, -100),
+            (self.translation.x, self.translation.y, self.translation.z),
             (0.0, 0.0, 0.0),
             (0.0, 1.0, 0.0),
         )
