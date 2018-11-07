@@ -22,10 +22,8 @@ class ObjReader(object):
                     self.verts.append(float(vert))
             elif line.startswith("f"):
                 for vert in line.split(" ")[1:]:
-                    for e in vert.split("//")[0]:
-                        self.vert_index.append(int(e[0])-1)
-                    for e in vert.split("//")[1]:
-                        self.norm_index.append(int(e[0])-1)
+                    self.vert_index.append(int(vert.split("//")[0])-1)
+                    self.norm_index.append(int(vert.split("//")[1])-1)
 
         if self.debug:
             print("ObjReader")

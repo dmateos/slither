@@ -26,24 +26,24 @@ def main():
 
     shader_program = program.Program(vert_shader, frag_shader)
 
-    vm = objreader.ObjReader("cube.obj", True)
+    vm = objreader.ObjReader("cube.obj", False)
     vm2 = objreader.ObjReader("monkey.obj", False)
-    #pyrcube = pyrr.geometry.create_cube()
+    vm3 = objreader.ObjReader("torus.obj", False)
 
-    vd = vertex_data.VertexData(shader_program, vm.verts, vm.vert_index, vm.normals, True)
-    vd2 = vertex_data.VertexData(shader_program, vm2.verts, vm2.vert_index, vm2.normals)
-    #vd3 = vertex_data.VertexData(shader_program, pyrcube[0], pyrcube[1])
+    vd = vertex_data.VertexData(shader_program, vm.verts, vm.vert_index, vm.normals, False)
+    vd2 = vertex_data.VertexData(shader_program, vm2.verts, vm2.vert_index, vm2.normals, False)
+    vd3 = vertex_data.VertexData(shader_program, vm3.verts, vm3.vert_index, vm3.normals, False)
 
     vo = vertex_object.VertexObject(vd, 0.0,0.0,0.0)
     vo2 = vertex_object.VertexObject(vd2, -5.0,00.0,0.0)
-    #vo3 = vertex_object.VertexObject(vd3, -5.0,00.0,0.0)
+    vo3 = vertex_object.VertexObject(vd3, 5.0,-2.0,0.0)
 
     while display.keep_going():
         display.clear()
 
         vo.draw(shader_program, camera_obj)
         vo2.draw(shader_program, camera_obj)
-        #vo3.draw(shader_program, camera_obj)
+        vo3.draw(shader_program, camera_obj)
 
         display.swap()
         display.poll()
