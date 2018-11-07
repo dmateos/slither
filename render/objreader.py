@@ -1,9 +1,11 @@
 class ObjReader(object):
-    def __init__(self, path):
+    def __init__(self, path, debug=False):
         self.path = path
         self.verts = []
         self.normals = []
         self.vert_index = []
+        self.debug = debug
+        self.read()
 
     def read(self):
         data = ""
@@ -18,10 +20,11 @@ class ObjReader(object):
                 for vert in line.split(" ")[1:]:
                     self.verts.append(float(vert))
             elif line.startswith("f"):
-                for vert in line.split(" ")[1:3]:
-                    for e in vert.split("//"):
-                        self.vert_index.append(e[0])
+                for vert in line.split(" ")[1:]:
+                    for e in vert.split("//")[0]:
+                        self.vert_index.append(int(e[0])-1)
 
-        print(self.verts)
-        print(self.vert_index)
+        if self.debug:
+            print(self.verts)
+            print(self.vert_index)
 

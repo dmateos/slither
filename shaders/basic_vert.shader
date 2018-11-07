@@ -2,7 +2,8 @@
 
 in vec3 vp;
 uniform mat4 translation;
+uniform mat4 view;
 
 void main(){
-  gl_Position = translation * vec4(vp, 1.0);
+  gl_Position = view * translation * vec4(vp, 1.0);
 }

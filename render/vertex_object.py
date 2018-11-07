@@ -3,12 +3,11 @@ import pyrr
 from OpenGL.GL import *
 
 class VertexObject(object):
-    def __init__(self, vertex_data):
+    def __init__(self, vertex_data, x, y, z):
         self.vertex_data = vertex_data
 
-        self.pos = pyrr.Vector3([0.10,0.0,0.0])
-        self.translation = pyrr.Vector3([0.0,0.0,0.0])
-        self.scale = pyrr.Vector3([0.5,0.5,0.5])
+        self.translation = pyrr.Vector3([x,y,z])
+        self.scale = pyrr.Vector3([10.0,10.0,10.0])
 
     def transforms(self):
         matrix = pyrr.Matrix44.from_scale(self.scale)
@@ -16,7 +15,8 @@ class VertexObject(object):
         matrix = matrix * translation
         return matrix
 
-    def draw(self, program):
+    def draw(self, program, camera):
         program.use()
         program.set_uniform("translation", self.transforms())
+        program.set_uniform("view", camera.transforms())
         self.vertex_data.draw()

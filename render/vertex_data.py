@@ -10,12 +10,12 @@ class VertexData(object):
 
         self.buffer_data = numpy.array(data, dtype="float32")
         self.index_data = numpy.array(index_data, dtype="uint32")
-        print(self.buffer_data)
-        print(self.index_data)
+
+        self.setup()
 
     def setup(self):
         self.vertex_array_id = glGenVertexArrays(1)
-        glBindVertexArray(self.vertex_array_id)
+        self.bind()
 
         self.vertex_buffer_id = glGenBuffers(1)
         glBindBuffer(GL_ARRAY_BUFFER, self.vertex_buffer_id)
@@ -36,16 +36,23 @@ class VertexData(object):
                      GL_STATIC_DRAW
         )
 
+        self.unbind()
+        glBindBuffer(GL_ARRAY_BUFFER, 0)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+
     def bind(self):
-        pass
+        glBindVertexArray(self.vertex_array_id)
 
     def unbind(self):
-        pass
+        glBindVertexArray(0)
 
     def draw(self):
         self.program.use()
+        self.bind()
         glDrawElements(GL_TRIANGLES, len(self.index_data), GL_UNSIGNED_INT, None)
 
         err = glGetError()
         if err:
             print(err)
+
+        self.unbind()
