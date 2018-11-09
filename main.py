@@ -53,9 +53,9 @@ def key_press(key):
     elif key == 83: #s
         camera_obj.back(20.0)
     elif key == 65: #a
-        camera_obj.pan_left(0.1)
+        camera_obj.strafe_left(0.1)
     elif key == 68: #d
-        camera_obj.pan_right(0.1)
+        camera_obj.strafe_right(0.1)
 
 if __name__ == "__main__":
     main()
