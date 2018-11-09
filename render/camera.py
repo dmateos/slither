@@ -1,5 +1,4 @@
 import pyrr
-import numpy
 
 class Camera(object):
     def __init__(self):
@@ -8,8 +7,8 @@ class Camera(object):
 
     def transforms(self):
         rotation = pyrr.Quaternion.from_eulers(self.rotation)
-        translation = pyrr.Matrix44.from_translation(self.position)
-        return translation * rotation
+        position = pyrr.Matrix44.from_translation(self.position)
+        return position * rotation
 
     def perspective(self):
         perspective = pyrr.Matrix44.perspective_projection(60.0, 1280/1024, 0.01, 1000.0)

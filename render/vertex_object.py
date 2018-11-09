@@ -5,14 +5,14 @@ class VertexObject(object):
     def __init__(self, vertex_data, x, y, z):
         self.vertex_data = vertex_data
 
-        self.translation = pyrr.Vector3([x,y,z])
+        self.position = pyrr.Vector3([x,y,z])
         self.scale = pyrr.Vector3([10.0,10.0,10.0])
 
     def transforms(self):
-        matrix = pyrr.Matrix44.from_scale(self.scale)
-        translation = pyrr.Matrix44.from_translation(self.translation)
-        matrix = matrix * translation
-        return matrix
+        scale = pyrr.Matrix44.from_scale(self.scale)
+        position = pyrr.Matrix44.from_translation(self.position)
+        scale = scale * position
+        return scale
 
     def draw(self, program, camera):
         program.use()
