@@ -6,7 +6,6 @@ from render import program
 from render import vertex_data
 from render import vertex_object
 from render import camera
-
 from render import objreader
 
 camera_obj = camera.Camera()
@@ -35,7 +34,7 @@ def main():
     vd3 = vertex_data.VertexData(shader_program, vm3.verts, vm3.vert_index, vm3.normals, False)
 
     vo = vertex_object.VertexObject(vd, 0.0,0.0,0.0)
-    vo2 = vertex_object.VertexObject(vd2, -5.0,00.0,0.0)
+    vo2 = vertex_object.VertexObject(vd2, -5.0,0.0,0.0)
     vo3 = vertex_object.VertexObject(vd3, 5.0,-2.0,0.0)
 
     while display.keep_going():
@@ -50,16 +49,14 @@ def main():
 
 def key_press(key):
     if key == 87: #w
-        camera_obj.translation.z -= 10.0
+        camera_obj.forward(20.0)
     elif key == 83: #s
-        camera_obj.translation.z += 10.0
-    elif key == 68: #d
-        camera_obj.translation.x += 10.0
+        camera_obj.back(20.0)
     elif key == 65: #a
-        camera_obj.translation.x -= 10.0
+        camera_obj.pan_left(0.1)
+    elif key == 68: #d
+        camera_obj.pan_right(0.1)
 
 if __name__ == "__main__":
     main()
-    #vm = pywavefront.Wavefront("cube.obj")
-    #print(vm.materials["Material"].vertex_format)
 

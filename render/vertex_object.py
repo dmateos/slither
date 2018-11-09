@@ -1,4 +1,3 @@
-import numpy
 import pyrr
 from OpenGL.GL import *
 

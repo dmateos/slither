@@ -1,19 +1,28 @@
-import numpy
 import pyrr
+import numpy
 
 class Camera(object):
     def __init__(self):
-        self.translation = pyrr.Vector3([0.0,0.0,50.0])
-        self.orientation = "something"
+        self.position = pyrr.Vector3([0.0,0.0,0.0])
+        self.rotation = pyrr.Vector3([0.0, 0.0, 0.0])
 
     def transforms(self):
-        lookat = pyrr.Matrix44.look_at(
-            (self.translation.x, self.translation.y, self.translation.z),
-            (0.0, 0.0, 0.0),
-            (0.0, 1.0, 0.0),
-        )
-        return lookat
+        rotation = pyrr.Quaternion.from_eulers(self.rotation)
+        translation = pyrr.Matrix44.from_translation(self.translation)
+        return translation * rotation
 
     def perspective(self):
         perspective = pyrr.Matrix44.perspective_projection(60.0, 1280/1024, 0.01, 1000.0)
         return perspective
+
+    def forward(self, n):
+        self.position.z += 1
+
+    def back(self, n):
+        self.position.z -= 1
+
+    def pan_left(self, n):
+        self.rotation.y += 0.1
+
+    def pan_right(self, n):
+        self.rotation.y -= 0.1

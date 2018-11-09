@@ -15,7 +15,10 @@ class Window(object):
         glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
 
         self.window = glfw.create_window(1280, 1024, "Window", None, None)
-        glfw.set_key_callback(self.window, self.key_event)
+        glfw.set_key_callback(self.window, self._key_event)
+        #glfw.set_input_mode(self.window, glfw.CURSOR, glfw.CURSOR_DISABLED)
+        glfw.set_input_mode(self.window,glfw.STICKY_KEYS,GL_TRUE)
+
         if not self.window:
             glfw.terminate()
             return
@@ -44,7 +47,6 @@ class Window(object):
     def on_key_press(self, callback):
         self._key_press_call.append(callback)
 
-    def key_event(self, window, key, scancode, action, mods):
-        if action == glfw.PRESS: #and key == glfw.KEY_W:
-            for cb in self._key_press_call:
-                cb(key)
+    def _key_event(self, window, key, scancode, action, mods):
+        for cb in self._key_press_call:
+            cb(key)
