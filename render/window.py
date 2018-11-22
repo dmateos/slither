@@ -47,6 +47,9 @@ class Window(object):
     def on_key_press(self, callback):
         self._key_press_call.append(callback)
 
+    def get_mouse_pos(self):
+        return glfw.get_cursor_pos(self.window)
+
     def _key_event(self, window, key, scancode, action, mods):
         for cb in self._key_press_call:
             cb(key)

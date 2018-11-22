@@ -6,13 +6,12 @@ class VertexObject(object):
         self.vertex_data = vertex_data
 
         self.position = pyrr.Vector3([x,y,z])
-        self.scale = pyrr.Vector3([10.0,10.0,10.0])
+        self.scale = pyrr.Vector3([1.0,1.0,1.0])
 
     def transforms(self):
         scale = pyrr.Matrix44.from_scale(self.scale)
         position = pyrr.Matrix44.from_translation(self.position)
-        scale = scale * position
-        return scale
+        return scale * position
 
     def draw(self, program, camera):
         program.use()
