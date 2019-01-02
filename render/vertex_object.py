@@ -8,10 +8,12 @@ class VertexObject(object):
         self.position = pyrr.Vector3([x,y,z])
         self.scale = pyrr.Vector3([1.0,1.0,1.0])
 
+        self.scalemat = pyrr.Matrix44.from_scale(self.scale)
+        self.posmat = pyrr.Matrix44.from_translation(self.position)
+        self.transformmat = self.scalemat * self.posmat
+
     def transforms(self):
-        scale = pyrr.Matrix44.from_scale(self.scale)
-        position = pyrr.Matrix44.from_translation(self.position)
-        return scale * position
+        return self.transformmat
 
     def draw(self, program, camera):
         program.use()

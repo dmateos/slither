@@ -14,6 +14,8 @@ class VertexData(object):
         self.index_data = numpy.array(index_data, dtype="uint32")
         self.normal_data = numpy.array(normal_data, dtype="float32")
 
+        self.index_len = len(self.index_data)
+
         if self.debug:
             print("VertexData")
             print(self.buffer_data)
@@ -41,13 +43,14 @@ class VertexData(object):
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
 
     def draw(self):
-        self.program.use()
+        #self.program.use()
         self.bind()
-        glDrawElements(GL_TRIANGLES, len(self.index_data), GL_UNSIGNED_INT, None)
+        glDrawElements(GL_TRIANGLES, self.index_len, GL_UNSIGNED_INT, None)
 
-        err = glGetError()
-        if err:
-            print(err)
+        if self.debug:
+            err = glGetError()
+            if err:
+                print(err)
 
         self.unbind()
 
